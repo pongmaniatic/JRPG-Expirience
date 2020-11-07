@@ -43,6 +43,7 @@ public class Character : MonoBehaviour
 
     void Start()
     {
+        currentHealth = maxhealth;
         HandleWeaponType();
         OnEnableUnselected();
     }
@@ -68,6 +69,9 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
+        if (currentHealth < 0){currentHealth = 0;}
+        if (currentHealth == 0){abilityEnergy = 0;}
+
         StateMachine();
 
         if (GameManager.gameManager.characterSelected == gameObject)
@@ -100,6 +104,7 @@ public class Character : MonoBehaviour
         {
             characterState = "moving"; 
             readyToChangeState = false;
+            if (currentHealth == 0) { characterState = "idle"; GameManager.gameManager.characterNumber += 1; }
         }
         if (characterState == "idle" && transform.position != startingPosition.position)
         {
@@ -130,6 +135,7 @@ public class Character : MonoBehaviour
             ResetSymbols();
             BossManager.bossManager.bossTurn = true;
         }
+
     }
     void Unselected()
     {
@@ -190,7 +196,7 @@ public class Character : MonoBehaviour
 
     public void LoseHealth()
     {
-        currentHealth -= 40;
+        currentHealth -= 15;
         float currentHelathPorcentage = (float)currentHealth / (float)maxhealth;
         characterHealthBar.fillAmount = currentHelathPorcentage;
     }

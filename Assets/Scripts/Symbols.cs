@@ -9,8 +9,6 @@ public class Symbols : MonoBehaviour
     public Transform symbolContainer3;
     public Transform symbolContainerInvisible;
     private float symbolMoveSpeed = 10f;
-
-    private string symbolState = "Idle";
     private Transform objective;
 
     public void ActivateSymbol()

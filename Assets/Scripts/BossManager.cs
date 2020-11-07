@@ -12,7 +12,8 @@ public class BossManager : MonoBehaviour
     public bool bossTurn = false;
     public Transform attackingPosition;
     public Transform startingPosition;
-    private float moveSpeed = 5f;
+    private float moveSpeed = 2.5f;
+    public GameObject endMenu;
 
     public Character Cube;
     public Character Capsule;
@@ -25,11 +26,13 @@ public class BossManager : MonoBehaviour
     }
     public void LoseHealth()
     {
+        FactoryText.factoryText.ActivateText(10,0);
         currentHealth -= 10;
         OnHealthChanged();
     }
     private void Update()
     {
+        if (currentHealth <= 0) { endMenu.SetActive(true); }
         if (bossTurn == true)
         {
 
@@ -41,9 +44,9 @@ public class BossManager : MonoBehaviour
             {
                 EndBossTurn();
                 int randomNumber = UnityEngine.Random.Range(0, 2);
-                if (randomNumber == 0) { Cube.LoseHealth(); }
-                if (randomNumber == 1) { Capsule.LoseHealth(); }
-                if (randomNumber == 2) { Sphere.LoseHealth(); }
+                if (randomNumber == 0) { Cube.LoseHealth(); FactoryText.factoryText.ActivateText(15, 1); }
+                if (randomNumber == 1) { Capsule.LoseHealth(); FactoryText.factoryText.ActivateText(15, 2); }
+                if (randomNumber == 2) { Sphere.LoseHealth(); FactoryText.factoryText.ActivateText(15, 3); }
                 bossTurn = false;
             }
         }
